@@ -18,7 +18,7 @@ class Cart:
         ).pack(side="right", padx=5, pady=20)
 
     def add_to_cart(self):
-        messagebox.showinfo("장바구니", "아이템이 장바구니에 추가되었습니다!")
+        messagebox.showinfo("장바구니", "장바구니에 추가되었습니다!")
 
     def remove_from_cart(self):
-        messagebox.showinfo("장바구니", "아이템이 장바구니에서 삭제되었습니다!")
+        messagebox.showinfo("장바구니", "장바구니에서 삭제되었습니다!")
