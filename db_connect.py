@@ -8,28 +8,29 @@ def connect_to_freshlydb():
         connection = mysql.connector.connect(
             host="localhost",
             user="root",
-            password="111111",  # 사용자의 비밀번호 입력
+            password="111111",
             database="freshlydb",
         )
 
         if connection.is_connected():
             print("Successfully connected to freshlydb!")
-            cursor = connection.cursor()
-            cursor.execute("SHOW TABLES")
-
-            tables = cursor.fetchall()
-            print("Tables in freshlydb:")
-            for table in tables:
-                print(table[0])
+            return connection
 
     except Error as e:
         print(f"Error: {e}")
+        return None
+
+connection = connect_to_freshlydb()
+if connection:
+    try:
+        cursor = connection.cursor()
+        cursor.execute("SHOW TABLES")
+
+        # 테이블 목록 가져오기
+        tables = cursor.fetchall()
+        tables_list = [table[0] for table in tables]  # 테이블 이름을 리스트로 저장
+        tables_list
+
     finally:
-        if connection.is_connected():
-            cursor.close()
-            connection.close()
-            print("MySQL connection is closed")
-
-
-# 함수 실행
-connect_to_freshlydb()
+        cursor.close()
+        connection.close()

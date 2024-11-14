@@ -1,8 +1,9 @@
-#재료 추가
+# 재료 추가
 import tkinter as tk
 from tkinter import ttk
+from tkinter import messagebox
 from datetime import date
-from ingredient_table import IngredientTable
+from db_connect import connect_to_freshlydb
 
 
 class AddIngredient:
@@ -59,19 +60,18 @@ class AddIngredient:
         storage_type = self.storage_type.get()
 
         if ingredient and purchase_date and expiration_date:
-            # 선택된 저장 위치에 재료 추가
-            if storage_type == "냉장":
-                self.fridge.ingredient_table.add_ingredient(
-                    ingredient, purchase_date, expiration_date
-                )
-            elif storage_type == "냉동":
-                self.freezer.ingredient_table.add_ingredient(
-                    ingredient, purchase_date, expiration_date
-                )
-            elif storage_type == "실온":
-                self.room_temp.ingredient_table.add_ingredient(
-                    ingredient, purchase_date, expiration_date
-                )
+            connection = connect_to_freshlydb()
+            cursor = connection.cursor()
+
+            # 재료 추가 쿼리 (각 저장 위치에 따라 다르게 처리)
+            cursor.execute(
+                "INSERT INTO ingredients (name, purchase_date, expiration_date, storage_type) VALUES (%s, %s, %s, %s)",
+                (ingredient, purchase_date, expiration_date, storage_type),
+            )
+
+            connection.commit()
+            cursor.close()
+            connection.close()
 
             # 입력 초기화
             self.ingredient_entry.delete(0, tk.END)
@@ -79,3 +79,8 @@ class AddIngredient:
             self.purchase_date_entry.insert(0, date.today().isoformat())
             self.expiration_date_entry.delete(0, tk.END)
             self.expiration_date_entry.insert(0, date.today().isoformat())
+
+            # 추가 완료 메시지
+            tk.messagebox.showinfo(
+                "성공", f"{ingredient} 재료가 {storage_type}에 추가되었습니다."
+            )
