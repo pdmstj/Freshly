@@ -13,25 +13,25 @@ class Login:
 
         # 사용자 이름 레이블과 입력 필드
         self.username_label = tk.Label(self.frame, text="아이디")
-        self.username_label.pack(pady=(20, 5))  # 위쪽에 더 큰 여백 추가
+        self.username_label.pack(pady=(20, 5))  # 위쪽에 여백 추가
         self.username_entry = tk.Entry(self.frame)
         self.username_entry.pack(pady=5)  # 아래 여백 추가
 
         # 비밀번호 레이블과 입력 필드
         self.password_label = tk.Label(self.frame, text="비밀번호")
-        self.password_label.pack(pady=(20, 5))  # 위쪽에 더 큰 여백 추가
+        self.password_label.pack(pady=(20, 5))  # 위쪽에 여백 추가
         self.password_entry = tk.Entry(self.frame, show="*")
         self.password_entry.pack(pady=5)  # 아래 여백 추가
 
         # 로그인 버튼
         self.login_button = tk.Button(self.frame, text="로그인", command=self.login)
-        self.login_button.pack(pady=(20, 5))  # 위쪽에 더 큰 여백 추가
+        self.login_button.pack(pady=(20, 5))  # 위쪽에 여백 추가
 
         # 회원가입 버튼
         self.signup_button = tk.Button(
             self.frame, text="회원가입", command=self.switch_to_signup
         )
-        self.signup_button.pack(pady=(5, 20))  # 아래쪽에 더 큰 여백 추가
+        self.signup_button.pack(pady=(5, 20))  # 아래쪽에 여백 추가
 
     def login(self):
         username = self.username_entry.get()
